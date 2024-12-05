@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import logo from '../assets/images/gangamitralogo.png';
+
 
 const Welcome = () => {
   const navigate = useNavigate();
@@ -39,7 +41,7 @@ const Welcome = () => {
       {/* Logo with easing before final position */}
       <motion.img
         id="logo"
-        src="src/assets/images/gangamitralogo.png"
+        src={logo}
         alt="Ganga Mitra Logo"
         className="mb-4 w-40 h-40 sm:w-48 sm:h-48 lg:w-60 lg:h-60 drop-shadow-2xl"
         initial={{ y: '-100px', opacity: 0 }} // Start from above and transparent

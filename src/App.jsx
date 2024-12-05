@@ -1,7 +1,7 @@
 import './App.css';
 import Welcome from './pages/Welcome';
 import SearchInitial from './pages/SearchInitial';
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { HashRouter as Router, Route, Routes } from "react-router-dom";
 import { motion } from 'framer-motion';
 
 function App() {
