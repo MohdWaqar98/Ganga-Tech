@@ -1,0 +1,30 @@
+body {
+  background-image: url('../src/assets/images/gangadesktop.jpg');
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center bottom; /* Start from bottom */
+  transition: background-position 1s ease-out; /* Add slide-up transition */
+  overflow: hidden;
+}
+
+@media screen and (max-width: 768px) {
+  body {
+    background-image: url('../src/assets/images/gangamobile.jpg');
+  }
+}
+
+/* For slide-up effect, initially place the background at the bottom */
+body {
+  animation: slideUp 2s forwards;
+}
+
+/* Animation keyframe for slide-up effect */
+@keyframes slideUp {
+  0% {
+    background-position: center bottom; /* Start from bottom */
+  }
+  100% {
+    background-position: center center; /* End at center */
+  }
+}
