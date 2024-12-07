@@ -183,20 +183,20 @@ const SearchInitial = () => {
                   label="Search input"
                   sx={{
                     input: {
-                      color: "black",
+                      color: "white",
                     },
                     label: {
-                      color: "black",
+                      color: "white",
                     },
                     "& .MuiOutlinedInput-root": {
                       "& fieldset": {
-                        borderColor: "black",
+                        borderColor: "white",
                       },
                       "&:hover fieldset": {
-                        borderColor: "black",
+                        borderColor: "white",
                       },
                       "&.Mui-focused fieldset": {
-                        borderColor: "black",
+                        borderColor: "white",
                       },
                     },
                   }}

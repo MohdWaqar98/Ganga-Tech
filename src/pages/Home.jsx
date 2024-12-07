@@ -31,7 +31,7 @@ const Home = () => {
         <>
           {/* Top Section */}
           <div className="absolute inset-0 z-0"></div>
-          <div className="relative z-10 flex items-center justify-between mx-4 mt-10 p-6 animate-slideDown">
+          <div className="relative z-10 flex items-center justify-between mx-4 mt-10 p-6 animate-slideDown ">
             {/* Location */}
             <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-2xl shadow-md">
               <svg xmlns="http://www.w3.org/2000/svg" className="w-[26px] h-[24.23px] text-black" viewBox="0 0 32 32">
@@ -57,7 +57,7 @@ const Home = () => {
 
           {/* Emoji Section */}
           <div className="flex justify-center mt-6 relative z-10 animate-bounceIn">
-            <img src="" alt="Water Quality" className="object-cover w-[217px] h-[258px]" />
+            <img src="src\assets\images\severe.png" alt="Water Quality" className="object-cover w-[217px] h-[258px]" />
           </div>
 
           {/* Combined White Box Section */}
