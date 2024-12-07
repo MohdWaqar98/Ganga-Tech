@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom"; // For navigation
-import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+import { useNavigate } from "react-router-dom";
 import { Autocomplete, TextField, Stack } from "@mui/material";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import data from "../data/data";
 import GangaFacts from "../data/GangaFacts";
 import "@fontsource/roboto/300.css";
@@ -9,16 +10,16 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import gsap from "gsap";
+import Loader from "../components/Loader"; 
 
 const SearchInitial = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredData, setFilteredData] = useState([]);
-  const [currentFactIndex, setCurrentFactIndex] = useState(0); // Current fact index
+  const [currentFactIndex, setCurrentFactIndex] = useState(0);
 
-  const navigate = useNavigate(); // Hook for navigation
+  const navigate = useNavigate();
 
-  // Refs for animation
   const headingRef = useRef(null);
   const subHeadingRef = useRef(null);
   const searchInputRef = useRef(null);
@@ -27,15 +28,12 @@ const SearchInitial = () => {
   const buttonRef = useRef(null);
 
   useEffect(() => {
-    // Simulate loading
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 3000);
-
     return () => clearTimeout(timer);
   }, []);
 
-  // GSAP animation after loading
   useEffect(() => {
     if (!isLoading) {
       gsap.fromTo(
@@ -63,40 +61,32 @@ const SearchInitial = () => {
         { opacity: 0 },
         { opacity: 1, duration: 1, delay: 1 }
       );
-
-      // Adding animation for "Did You Know?" heading
       gsap.fromTo(
         didYouKnowRef.current,
         { opacity: 0 },
-        { opacity: 1, duration: 1, delay: 0.7 } // Adjust delay for proper sequence
+        { opacity: 1, duration: 1, delay: 0.7 }
       );
     }
   }, [isLoading]);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      // Fade-out current fact
       gsap.to(factRef.current, {
         opacity: 0,
         duration: 0.5,
         onComplete: () => {
-          // Update to the next fact
           setCurrentFactIndex(
             (prevIndex) => (prevIndex + 1) % GangaFacts.length
           );
-
-          // Fade-in new fact
           gsap.to(factRef.current, { opacity: 1, duration: 0.5 });
         },
       });
     }, 2000);
-
-    return () => clearInterval(interval); // Cleanup interval
+    return () => clearInterval(interval);
   }, []);
 
   const handleSearchChange = (event, value) => {
     setSearchTerm(value);
-
     if (value) {
       const filtered = data.filter((item) =>
         item.name.toLowerCase().startsWith(value.toLowerCase())
@@ -111,6 +101,8 @@ const SearchInitial = () => {
     if (value) {
       setSearchTerm(value);
       setFilteredData([]);
+      // Blur the input to hide the keyboard
+      searchInputRef.current.querySelector("input").blur();
     }
   };
 
@@ -121,23 +113,26 @@ const SearchInitial = () => {
 
   const handleGetForecastClick = () => {
     if (searchTerm.trim()) {
-      navigate("/Home", { state: { location: searchTerm } }); // Navigate to Home.jsx with searchTerm
+      navigate("/Home", { state: { location: searchTerm } });
     } else {
-      alert("Please enter a valid location!");
+      toast.error("Please enter a valid location!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     }
   };
 
   return (
     <>
+      <ToastContainer />
       {isLoading ? (
-        <div className="flex items-center justify-center h-screen bg-black">
-          <DotLottieReact
-            src="https://lottie.host/b4a28780-8ba8-4f3d-9f5d-09c22324c8c5/DiFjCoVy9M.lottie"
-            loop
-            autoplay
-            style={{ width: "200px", height: "200px" }}
-          />
-        </div>
+        <Loader /> 
       ) : (
         <div className="relative z-20 flex flex-col items-center justify-start pt-20 h-screen text-white font-poppins">
           <h1
@@ -148,7 +143,7 @@ const SearchInitial = () => {
           </h1>
           <h1
             ref={subHeadingRef}
-            className="text-3xl sm:text-4xl md:text-5xl font-semibold drop-shadow-xl mt-2"
+            className="text-4xl sm:text-4xl md:text-5xl font-semibold drop-shadow-xl"
           >
             GANGA MITRA
           </h1>
@@ -164,7 +159,7 @@ const SearchInitial = () => {
             sx={{
               position: "relative",
               width: { xs: "80%", sm: 300, md: 700 },
-              color: "black",
+              color: "white",
             }}
           >
             <Autocomplete
@@ -208,6 +203,7 @@ const SearchInitial = () => {
               <lord-icon
                 src="https://cdn.lordicon.com/nqtddedc.json"
                 trigger="hover"
+                colors="primary:#ffffff"
                 style={{
                   position: "absolute",
                   top: "25%",
@@ -224,21 +220,25 @@ const SearchInitial = () => {
             )}
           </Stack>
 
-          {/* Did You Know Section */}
-          <div className="mt-9 text-center text-sm sm:text-base md:text-lg text-white">
-            <p ref={didYouKnowRef} className="font-bold mb-2">
+          <div
+            className="text-center text-sm sm:text-base md:text-lg text-white"
+            style={{ height: "120px", overflow: "hidden", marginTop: "3rem" }}
+          >
+            <p ref={didYouKnowRef} className="font-bold mb-2 text-2xl">
               Did You Know?
             </p>
-            <div ref={factRef} className="text-sm sm:text-base md:text-lg">
+            <div
+              ref={factRef}
+              className="text-sm sm:text-base md:text-lg px-4"
+            >
               <p>{GangaFacts[currentFactIndex].fact}</p>
             </div>
           </div>
 
-          {/* Button */}
           <button
             ref={buttonRef}
             onClick={handleGetForecastClick}
-            className="bg-[#0D009C] text-white text-sm sm:text-base md:text-lg font-semibold mt-10 px-6 py-3 rounded-full shadow-lg hover:bg-blue-700"
+            className="bg-[#0D009C] text-white text-lg sm:text-xl md:text-2xl font-semibold mt-10 px-8 py-4 rounded-full shadow-lg hover:bg-blue-700"
           >
             Get Your Forecast
           </button>
