@@ -162,42 +162,44 @@ const SearchInitial = () => {
               color: "white",
             }}
           >
-            <Autocomplete
-              ref={searchInputRef}
-              freeSolo
-              id="free-solo-2-demo"
-              disableClearable
-              options={data.map((option) => option.name)}
-              value={searchTerm}
-              onInputChange={handleSearchChange}
-              onChange={handleOptionSelect}
-              getOptionLabel={(option) => option.toString()}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Search input"
-                  sx={{
-                    input: {
-                      color: "white",
-                    },
-                    label: {
-                      color: "white",
-                    },
-                    "& .MuiOutlinedInput-root": {
-                      "& fieldset": {
-                        borderColor: "white",
-                      },
-                      "&:hover fieldset": {
-                        borderColor: "white",
-                      },
-                      "&.Mui-focused fieldset": {
-                        borderColor: "white",
-                      },
-                    },
-                  }}
-                />
-              )}
-            />
+           <Autocomplete
+  ref={searchInputRef}
+  freeSolo
+  id="free-solo-2-demo"
+  disableClearable
+  options={data.map((option) => option.name)}
+  value={searchTerm}
+  onInputChange={handleSearchChange}
+  onChange={handleOptionSelect}
+  getOptionLabel={(option) => option.toString()}
+  renderInput={(params) => (
+    <TextField
+      {...params}
+      label="Search input"
+      sx={{
+        input: {
+          color: "white",
+        },
+        label: {
+          color: "white",
+        },
+        "& .MuiOutlinedInput-root": {
+          "& fieldset": {
+            borderColor: "white",
+          },
+          "&:hover fieldset": {
+            borderColor: "white",
+          },
+          "&.Mui-focused fieldset": {
+            borderColor: "white",
+          },
+        },
+        position: "relative", /* Ensure it's not blocking the cursor */
+        zIndex: 1, /* Lower than the cursor's z-index */
+      }}
+    />
+  )}
+/>
 
             {searchTerm && (
               <lord-icon
