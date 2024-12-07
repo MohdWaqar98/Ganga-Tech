@@ -1,10 +1,19 @@
 import React, { useState, useEffect } from 'react'; 
 import { useLocation } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleRedirect = () => {
+    navigate("/settings"); // Change this path based on your Route setup
+  };
+  const handleBell = () => {
+    navigate("/Alert"); // Change this path based on your Route setup
+  };
   const { location: userLocation } = location.state || {};
 
   useEffect(() => {
@@ -42,12 +51,12 @@ const Home = () => {
             </div>
             {/* Icons */}
             <div className="flex gap-4">
-              <button className="text-white text-xl animate-fadeIn">
+              <button className="text-white text-xl animate-fadeIn" onClick={handleRedirect}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="30.5" height="30.5" viewBox="0 0 16 16">
                   <path fill="currentColor" d="M6 9.5A2 2 0 0 1 7.937 11H13.5a.5.5 0 0 1 .09.992L13.5 12l-5.563.001a2 2 0 0 1-3.874 0L2.5 12a.5.5 0 0 1-.09-.992L2.5 11h1.563A2 2 0 0 1 6 9.5m0 1a1 1 0 1 0 0 2a1 1 0 0 0 0-2m4-8A2 2 0 0 1 11.937 4H13.5a.5.5 0 0 1 .09.992L13.5 5l-1.563.001a2 2 0 0 1-3.874 0L2.5 5a.5.5 0 0 1-.09-.992L2.5 4h5.563A2 2 0 0 1 10 2.5m0 1a1 1 0 1 0 0 2a1 1 0 0 0 0-2"/>
                 </svg>
               </button>
-              <button className="text-white text-xl">
+              <button className="text-white text-xl" onClick={handleBell}>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="35" height="35">
                   <path d="M12 24a2.49 2.49 0 002.5-2.5h-5A2.49 2.49 0 0012 24zm6.3-7V10a6.3 6.3 0 00-12.6 0v7l-2 2v1h16v-1z"/>
                 </svg>
