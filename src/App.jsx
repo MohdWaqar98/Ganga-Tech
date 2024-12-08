@@ -3,6 +3,8 @@ import Welcome from './pages/Welcome';
 import SearchInitial from './pages/SearchInitial';
 import Home from './pages/Home';
 import Article from './pages/article'; // Ensure correct case for file names
+import Alert from './pages/Alert';
+import Settings from './pages/Settings';
 import { HashRouter as Router, Route, Routes } from "react-router-dom";
 import { motion } from 'framer-motion';
 
@@ -53,6 +55,34 @@ function App() {
             path="/Article"
             element={<Article />} // Correct usage of Article component
           />
+              
+            <Route
+            path="/Settings"
+            element={
+              // <motion.div
+              //   initial={{ y: '-100%' }} // Start off-screen (above)
+              //   animate={{ y: '0%' }} // Slide in to view
+              //   exit={{ y: '-100%' }} // Slide out on exit
+              //   transition={{ duration: 1 }}
+              // >
+                <Settings/>
+              // </motion.div>
+            }
+          />
+<Route
+            path="/Alert"
+            element={
+              // <motion.div
+              //   initial={{ y: '-100%' }} // Start off-screen (above)
+              //   animate={{ y: '0%' }} // Slide in to view
+              //   exit={{ y: '-100%' }} // Slide out on exit
+              //   transition={{ duration: 1 }}
+              // >
+                <Alert/>
+              // </motion.div>
+            }
+          />
+
         </Routes>
       </Router>
     </div>
