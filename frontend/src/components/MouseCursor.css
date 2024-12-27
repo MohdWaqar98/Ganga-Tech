@@ -1,0 +1,46 @@
+/* Hide default cursor globally */
+/* html, body {
+    cursor: none;
+  } */
+  
+  #page1{
+    cursor: none;
+  }
+  /* Custom Cursor Styles */
+  .custom-cursor {
+    position: absolute;
+    pointer-events: none;
+    background-color: #ffffff;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999; /* Ensure it's above other elements */
+  }
+  
+  
+  /* Pulse animation keyframes */
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+      opacity: 0.7;
+    }
+    50% {
+      transform: scale(1.3);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 0.7;
+    }
+  }
+  
+  /* When cursor hovers over interactive elements (buttons, links) */
+  body button:hover .custom-cursor,
+  body a:hover .custom-cursor {
+    background-color: rgba(0, 123, 255, 1); /* Blue color on hover */
+    width: 40px;
+    height: 40px;
+    transition: all 0.3s ease-in-out;
+  }
+  
