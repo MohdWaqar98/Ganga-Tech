@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Line } from "react-chartjs-2"; // Import Line component from react-chartjs-2
+import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -10,6 +10,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import annotationPlugin from "chartjs-plugin-annotation";
 import DataMatchDash from "./DataMatchDash";
 
 ChartJS.register(
@@ -19,12 +20,21 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  annotationPlugin // Register the annotation plugin
 );
 
 const DashboardComponent = () => {
   const [data, setData] = useState([]); // Array of data from DataMatch
   const [selectedParam, setSelectedParam] = useState("ph"); // Default selected parameter
+
+  // Threshold values for each parameter
+  const thresholdValues = {
+    ph: 7.5,
+    bod: 3,
+    do: 5,
+    totalColiform: 500,
+  };
 
   const handleRadioChange = (param) => {
     setSelectedParam(param); // Update selected parameter
@@ -32,7 +42,7 @@ const DashboardComponent = () => {
 
   // Prepare data for the chart
   const chartData = {
-    labels: data.map((item) => item.date), // Dates - x-axis
+    labels: data.map((item, index) => `Day ${index + 1}`), // Dates - x-axis
     datasets: [
       {
         label: `River Quality (${selectedParam.toUpperCase()})`,
@@ -51,6 +61,28 @@ const DashboardComponent = () => {
       legend: {
         display: true,
         position: "top",
+      },
+      annotation: {
+        annotations: {
+          thresholdLine: {
+            type: "line",
+            yMin: thresholdValues[selectedParam], // Dynamic threshold
+            yMax: thresholdValues[selectedParam], // Fixed at the same value
+            borderColor: "red", // Color of the threshold line
+            borderWidth: 2,
+            label: {
+              content: `Threshold (${thresholdValues[selectedParam]})`,
+              enabled: true,
+              position: "end",
+              color: "red",
+              backgroundColor: "rgba(255, 255, 255, 0.8)",
+              font: {
+                size: 12,
+              },
+            },
+          },
+
+        },
       },
     },
     scales: {
@@ -126,7 +158,17 @@ const DashboardComponent = () => {
                 className="flex justify-between items-center mb-4"
                 key={index}
               >
-                <span className="date-class text-black">{item.date}</span>
+                <span className="date-class text-red-500">
+                  {(new Date(item.date) || new Date())
+                    .toLocaleDateString("en-US", {
+                      day: "2-digit",
+                      month: "2-digit",
+                      weekday: "short",
+
+
+                    })
+                    .replace(/\//g, ", ")}
+                </span>
                 <div className="flex items-center space-x-1">
                   <i className="fas fa-tint text-black"></i>
                   <span className="value-class text-black font-semibold">

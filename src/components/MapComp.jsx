@@ -1,69 +1,133 @@
-import React, { useEffect } from "react";
-import GangaLocations from "../data/GangaLocations"
-// import { OlaMaps } from '../OlaMaps/olamaps-js-sdk.es'
-// import '../OlaMaps/style.css';
+import React, { useEffect, useRef, useState } from "react";
+import { Map, View } from "ol";
+import TileLayer from "ol/layer/Tile";
+import OSM from "ol/source/OSM";
+import "ol/ol.css";
+import Feature from "ol/Feature";
+import { Point } from "ol/geom";
+import { Style, Fill, Stroke, Circle as CircleStyle } from "ol/style";
+import VectorSource from "ol/source/Vector";
+import VectorLayer from "ol/layer/Vector";
+import Overlay from "ol/Overlay";
+import locations from "../data/GangaLocations"; // Location coordinates array
+import DataMatch from "../components/DataMatch"; // Import the DataMatch component
 
+const MapComp = () => {
+  const mapRef = useRef(null);
+  const mapInstance = useRef(null);
+  const popupRef = useRef(null); // Popup reference
+  const [mergedData, setMergedData] = useState([]); // Stores merged location and data info
+  const [todayData, setTodayData] = useState(null); // Stores today's data from DataMatch
 
-const MapComp = ({ selectedLocation, waterData }) => {
-    <>
-    <h1>HELLO</h1>
-    </>
-   
-//   useEffect(() => {
-//     const checkSDKLoaded = () => {
-//         if (window.Ola) {
-//           initializeMap();
-//         } else {
-//           console.error("Ola Maps SDK is not loaded yet.");
-//           setTimeout(checkSDKLoaded, 100); // Retry after 100ms
-//         }};
-      
-    //   const olaMaps = new olaMaps({
-    //     apiKey: rxoj0kIXPPc5C0S2RwKxlr9DqWXbznUtpoqsytwU,
-    // })
-    // const map = new OlaMaps.Map("map", {
-    //   center: [25.0, 85.0], // Default center point for the map
-    //   zoom: 6, // Adjust zoom to cover all locations
-    //   apiKey: "rxoj0kIXPPc5C0S2RwKxlr9DqWXbznUtpoqsytwU", // Replace with your Ola Maps API Key
-    // });
+  // Merge location data with today's data from DataMatch
+  useEffect(() => {
+    if (!todayData) return;
 
-    // const myMap = olaMaps.init({
-    //     style: "https://api.olamaps.io/tiles/vector/v1/styles/default-light-standard/style.json",
-    //     container: 'map',
-    //     center: [25.0, 85.0],
-    //     zoom: 6
-    //   })
-    // Find the selected location in GangaLocations
-//     const location = GangaLocations.find(
-//       (loc) => loc.name.toLowerCase() === selectedLocation.toLowerCase()
-//     );
+    const merged = locations.map((location) => ({
+      ...location,
+      ...todayData, // Add ph, bod, do, totalColiform to location
+    }));
+    setMergedData(merged);
+  }, [todayData]);
 
-//     if (location) {
-//       // Center map on the selected location
-//       myMap.setView([location.lat, location.lng], 10);
+  // Initialize Map
+  useEffect(() => {
+    if (!mapRef.current || mapInstance.current || mergedData.length === 0) return;
 
-//       // Add a marker for the selected location
-//       const marker = new OlaMaps.Marker([location.lat, location.lng]).addTo(map);
+    // Create Map instance
+    mapInstance.current = new Map({
+      target: mapRef.current,
+      layers: [
+        new TileLayer({
+          source: new OSM(),
+        }),
+      ],
+      view: new View({
+        center: [85.0, 25.0], // Default center for Ganga region
+        zoom: 6,
+        projection: "EPSG:4326",
+      }),
+    });
 
-//       // Get water data for the location
-//       const { ph, do: dissolvedOxygen, bod, totalColiform } = waterData;
+    // Add Markers
+    const features = mergedData.map((location) => {
+      const marker = new Feature({
+        geometry: new Point([location.longitude, location.latitude]),
+        name: location.name,
+        ph: location.ph,
+        do: location.do,
+        bod: location.bod,
+        totalColiform: location.totalColiform,
+      });
 
-//       // Bind popup with water quality data
-//       marker.bindPopup(`
-//         <div>
-//           <h3>${location.name}</h3>
-//           <p><strong>PH:</strong> ${ph}</p>
-//           <p><strong>DO:</strong> ${dissolvedOxygen}</p>
-//           <p><strong>BOD:</strong> ${bod}</p>
-//           <p><strong>Total Coliform:</strong> ${totalColiform}</p>
-//         </div>
-//       `);
-//     } else {
-//       console.error("Selected location not found in GangaLocations.");
-//     }
-//   }, [selectedLocation, waterData]);
+      marker.setStyle(
+        new Style({
+          image: new CircleStyle({
+            radius: 8,
+            fill: new Fill({
+              color: location.ph > 7.5 || location.bod > 2.5 ? "red" : "green", // Dynamic color
+            }),
+            stroke: new Stroke({ color: "black", width: 1 }),
+          }),
+        })
+      );
 
-//   return <div id="map" style={{ width: "100%", height: "500px" }}></div>;
+      return marker;
+    });
+
+    const vectorSource = new VectorSource({ features });
+    const vectorLayer = new VectorLayer({ source: vectorSource });
+
+    mapInstance.current.addLayer(vectorLayer);
+
+    // Create Popup
+    const popup = new Overlay({
+      element: popupRef.current,
+      positioning: "bottom-center",
+      stopEvent: true,
+      offset: [0, -10],
+    });
+    mapInstance.current.addOverlay(popup);
+
+    // Add Popup on Click
+    mapInstance.current.on("click", (event) => {
+      const feature = mapInstance.current.forEachFeatureAtPixel(event.pixel, (f) => f);
+      if (feature) {
+        const props = feature.getProperties();
+        const coordinates = feature.getGeometry().getCoordinates();
+        popup.setPosition(coordinates);
+
+        // Update popup content
+        popupRef.current.innerHTML = `
+          <div style="background: white; padding: 8px; border-radius: 4px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);">
+            <strong>${props.name}</strong><br />
+            PH: ${props.ph}<br />
+            DO: ${props.do}<br />
+            BOD: ${props.bod}<br />
+            Total Coliform: ${props.totalColiform}
+          </div>
+        `;
+      } else {
+        popup.setPosition(undefined); // Hide popup
+      }
+    });
+  }, [mergedData]);
+
+  return (
+    <div className="flex justify-center">
+      <DataMatch setTodayData={setTodayData} /> {/* Get dynamic data */}
+      <div
+        id="map"
+        ref={mapRef}
+        style={{
+          width: "90%",
+          height: "480px",
+          border: "2px solid black",
+        }}
+      ></div>
+      <div ref={popupRef} id="popup"></div> {/* Popup container */}
+    </div>
+  );
 };
 
 export default MapComp;

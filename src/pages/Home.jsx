@@ -96,41 +96,41 @@ const Home = () => {
 
     if (
       ph >= 6.5 &&
-      ph <= 8.5 &&
-      dissolvedOxygen >= 6 &&
-      bod <= 2 &&
+      ph <= 8.5 ||
+      dissolvedOxygen >= 6 ||
+      bod <= 2 ||
       totalColiform <= 50
     ) {
       return "Class A";
     } else if (
       ph >= 6.5 &&
-      ph <= 8.5 &&
-      dissolvedOxygen >= 5 &&
-      bod <= 3 &&
+      ph <= 8.5 ||
+      dissolvedOxygen >= 5 ||
+      bod <= 3 ||
       totalColiform <= 500
     ) {
       return "Class B";
     } else if (
       ph >= 6 &&
-      ph <= 9 &&
-      dissolvedOxygen >= 4 &&
-      bod <= 3 &&
+      ph <= 9 ||
+      dissolvedOxygen >= 4 ||
+      bod <= 3 ||
       totalColiform <= 5000
     ) {
       return "Class C";
     } else if (
       ph >= 6.5 &&
-      ph <= 8.5 &&
-      dissolvedOxygen >= 4 &&
-      bod <= 3 &&
+      ph <= 8.5 ||
+      dissolvedOxygen >= 4 ||
+      bod <= 3 ||
       totalColiform <= 5000
     ) {
       return "Class D";
     } else if (
       ph >= 6 &&
-      ph <= 8.5 &&
-      dissolvedOxygen >= 4 &&
-      bod <= 3 &&
+      ph <= 8.5 ||
+      dissolvedOxygen >= 4 ||
+      bod <= 3 ||
       totalColiform <= 5000
     ) {
       return "Class E";
@@ -194,7 +194,7 @@ const Home = () => {
                   height="30.5"
                   viewBox="0 0 16 16"
                 >
-                  <path
+                 <path
                     fill="currentColor"
                     d="M6 9.5A2 2 0 0 1 7.937 11H13.5a.5.5 0 0 1 .09.992L13.5 12l-5.563.001a2 2 0 0 1-3.874 0L2.5 12a.5.5 0 0 1-.09-.992L2.5 11h1.563A2 2 0 0 1 6 9.5m0 1a1 1 0 1 0 0 2a1 1 0 0 0 0-2m4-8A2 2 0 0 1 11.937 4H13.5a.5.5 0 0 1 .09.992L13.5 5l-1.563.001a2 2 0 0 1-3.874 0L2.5 5a.5.5 0 0 1-.09-.992L2.5 4h5.563A2 2 0 0 1 10 2.5m0 1a1 1 0 1 0 0 2a1 1 0 0 0 0-2"
                   />
@@ -223,7 +223,7 @@ const Home = () => {
             <img
               src={currentQuality?.imageLink || "N/A"}
               alt="Water Quality"
-              className="object-cover w-[217px] h-auto"
+              className="object-cover w-[150px] h-[175px]"
             />
           </div>
 
@@ -232,23 +232,7 @@ const Home = () => {
             <div>
               <div className="article flex items-center justify-between ">
                 <button onClick={handleArticleClick}>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="36"
-                    height="36"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      fill="currentColor"
-                      fillRule="evenodd"
-                      d="M4.727 2.712c.306-.299.734-.494 1.544-.6C7.105 2.002 8.209 2 9.793 2h4.414c1.584 0 
-                      2.688.002 3.522.112c.810.106 1.238.301 1.544.6c.305.3.504.72.613 1.513c.112.817.114 
-                      1.899.114 3.45v7.839H7.346c-.903 0-1.519-.001-2.047.138c-.472.124-.91.326-1.299.592V7.
-                      676c0-1.552.002-2.634.114-3.451c.109-.793.308-1.213.613-1.513m2.86 3.072a.82.82 0 0 0-.828.81c0 .448.37.811.827.811h8.828a.82.82 0 0 0 .827-.81a.82.82 
-                      0 0 0-.827-.811zm-.828 4.594c0-.447.37-.81.827-.81h5.517a.82.82 0 0 1 .828.81a.82.82 0 0 1-.828.811H7.586a.82.82 0 0 1-.827-.81"
-                      clipRule="evenodd"
-                    />
-                  </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M3 6c-.55 0-1 .45-1 1v13c0 1.1.9 2 2 2h13c.55 0 1-.45 1-1s-.45-1-1-1H5c-.55 0-1-.45-1-1V7c0-.55-.45-1-1-1m17-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2m-2 9h-8c-.55 0-1-.45-1-1s.45-1 1-1h8c.55 0 1 .45 1 1s-.45 1-1 1m-4 4h-4c-.55 0-1-.45-1-1s.45-1 1-1h4c.55 0 1 .45 1 1s-.45 1-1 1m4-8h-8c-.55 0-1-.45-1-1s.45-1 1-1h8c.55 0 1 .45 1 1s-.45 1-1 1"/></svg>
                 </button>
                 {/* Display current date without the day */}
               </div>
@@ -465,4 +449,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Home;

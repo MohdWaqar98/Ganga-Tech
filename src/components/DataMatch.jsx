@@ -27,10 +27,10 @@ const DataMatch = ({ setTodayData }) => {
       tempData.push({
         id: i + 1,
         date: formattedDate,
-        ph: (Math.random() * 2 + 7).toFixed(2), // Random ph value between 7.0 and 9.0
-        do: (Math.random() * 2 + 6).toFixed(2), // Random DO value between 6.0 and 8.0
-        bod: (Math.random() * 3 + 2).toFixed(2), // Random BOD value between 2.0 and 5.0
-        totalColiform: Math.floor(Math.random() * 1000), // Random total coliform value
+        ph: parseFloat(Math.random() * (8.5 - 6) + 6).toFixed(2), // Random ph value between 6.0 and 8.5
+        do: parseFloat(Math.random() * (8 - 4) + 4).toFixed(2),   // Random DO value between 4.0 and 8.0
+        bod: parseFloat(Math.random() * (3 - 1) + 1).toFixed(2),  // Random BOD value between 1.0 and 3.0
+        totalColiform: Math.floor(Math.random() * 5001) 
       });
     }
 

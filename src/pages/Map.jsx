@@ -11,16 +11,17 @@ import MapComp from '../components/MapComp';
 
 const Map = () => {
     const [activeCircle, setActiveCircle] = useState(3);
-    const [userLocation, setUserLocation] = useState(() => {
-      // Load the persisted location from localStorage or default to "Unknown Location"
-      return localStorage.getItem("userLocation") || "Unknown Location";
-    });
+    // const [userLocation, setUserLocation] = useState(() => {
+    //   // Load the persisted location from localStorage or default to "Unknown Location"
+    //   return localStorage.getItem("userLocation") || "Unknown Location";
+    // });
     const navigate = useNavigate();
     const [isAlertVisible, setIsAlertVisible] = useState(false);
   const [isSettingsVisible, setIsSettingsVisible] = useState(false);
   const handleBellClick = () => {
     setIsAlertVisible((prev) => !prev);
   };
+  const MemoizedMapComp = React.memo(MapComp);
   const handleSettingsClick = () => {
     setIsSettingsVisible((prev) => !prev);
   };
@@ -45,14 +46,14 @@ const Map = () => {
         animate: { x: 0, opacity: 1 },
         exit: { x: "-100%", opacity: 0 },
     };
-      useEffect(() => {
-        // Save location in localStorage if available
-        const { location: stateLocation } = location.state || {};
-        if (stateLocation) {
-          setUserLocation(stateLocation);
-          localStorage.setItem("userLocation", stateLocation);
-        }
-      }, [location.state]);
+      // useEffect(() => {
+      //   // Save location in localStorage if available
+      //   const { location: stateLocation } = location.state || {};
+      //   if (stateLocation) {
+      //     setUserLocation(stateLocation);
+      //     localStorage.setItem("userLocation", stateLocation);
+      //   }
+      // }, [location.state]);
 
   return (
     <>
@@ -64,8 +65,8 @@ const Map = () => {
             style={{ width: "3" }}
           >
             {/* Location */}
-            <div className="flex items-center gap-2 bg-white px-2 py-2 w-52 rounded-2xl shadow-md">
-              <svg
+            <div className="flex items-center gap-2 justify-center items-center bg-white px-2 py-2 w-52 rounded-2xl shadow-md">
+              {/* <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="w-[26px] h-[24.23px] text-black"
                 viewBox="0 0 32 32"
@@ -75,9 +76,9 @@ const Map = () => {
                   d="M16 2A11.013 11.013 0 0 0 5 13a10.9 10.9 0 0 0 2.216 6.6s.3.395.349.452L16 30l8.439-9.953c.044-.053.345-.447.345-.447l.001-.003A10.9 10.9 0 0 0 27 13A11.013 11.013 0 0 0 16 2m0 15a4 4 0 1 1 4-4a4.005 4.005 0 0 1-4 4"
                 />
                 <circle cx="16" cy="13" r="4" fill="none" />
-              </svg>
+              </svg> */}
               <span className="text-black font-semibold">
-              {userLocation}
+              Map Mitra
               </span>
             </div>
             <div className="flex gap-3">
@@ -114,7 +115,10 @@ const Map = () => {
               </button>
             </div>
           </div>
-          {/* <MapComp/> */}
+          <div className="bg-blue-100 rounded-xl ml-6 flex justify-center items-center p-4 shadow-md text-center mb-6 w-[85%]">
+            <h2 className="text-lg font-semibold justify-center">Our Monitoring Stations</h2>
+          </div>
+          <MemoizedMapComp />;
           
           <motion.div
             className="min-h-screen "

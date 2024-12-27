@@ -56,7 +56,7 @@ const Dashboard = () => {
         style={{ width: "3" }}
       >
         {/* Location */}
-        <div className="flex items-center gap-2 bg-white px-2 py-2 w-60 rounded-2xl shadow-md ">
+        <div className="flex items-center gap-2 bg-white px-2 py-2 w-64 rounded-2xl shadow-md ">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="w-[26px] h-[24.23px] text-black"
