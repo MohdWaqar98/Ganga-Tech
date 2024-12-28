@@ -25,22 +25,25 @@ const Map = () => {
   const handleSettingsClick = () => {
     setIsSettingsVisible((prev) => !prev);
   };
-    const handleCircleClick = (circleNum) => {
-        setActiveCircle(circleNum);
-        switch (circleNum) {
-          case 1:
-            navigate('/Home');
-            break;
-          case 2:
-            navigate('/Dashboard');
-            break;
-          case 3:
-            navigate('/Map');
-            break;
-          default:
-            break;
-        }
-      };
+  const handleCircleClick = (circleNum) => {
+    setActiveCircle(circleNum);
+    switch (circleNum) {
+      case 1:
+        navigate("/search");
+        break;
+      case 2:
+        navigate("/Home");
+        break;
+      case 3:
+        navigate("/Dashboard");
+        break;
+        case 4:
+          navigate("/Map");
+          break;
+      default:
+        break;
+    }
+  };
       const pageVariants = {
         initial: { x: "100%", opacity: 0 },
         animate: { x: 0, opacity: 1 },
@@ -57,6 +60,7 @@ const Map = () => {
 
   return (
     <>
+    <div className="relative min-h-screen bg-gradient-to-b from-[#00ADFF] to-[#006FFF]">
       <div className="relative min-h-screen">
       {isAlertVisible && <Alert />}
       {isSettingsVisible && <Settings />}
@@ -65,7 +69,7 @@ const Map = () => {
             style={{ width: "3" }}
           >
             {/* Location */}
-            <div className="flex items-center gap-2 justify-center items-center bg-white px-2 py-2 w-52 rounded-2xl shadow-md">
+            <div className="flex gap-2 justify-center items-center bg-white px-2 py-2 w-52 rounded-2xl shadow-md">
               {/* <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="w-[26px] h-[24.23px] text-black"
@@ -128,37 +132,107 @@ const Map = () => {
             exit="exit"
             transition={{ duration: 0.5, ease: "easeInOut" }}
         >
-    <div className="flex gap-2 justify-center fixed bottom-0 left-0 right-0 p-4">
-              <button
-                className={`text-white text-xl animate-fadeIn ${
-                  activeCircle === 1 ? 'bg-blue-500 rounded-full p-2' : ''
-                }`}
-                onClick={() => handleCircleClick(1)}
+   <div className="flex gap-2 justify-center fixed bottom-0 left-0 right-0 p-4">
+            <button
+              className={`text-white text-xl animate-fadeIn ${
+                activeCircle === 11 ? "bg-blue-500 rounded-full p-2" : ""
+              }`}
+              onClick={() => handleCircleClick(1)}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width={24}
+                height={24}
+                viewBox="0 0 24 24"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M5 12H3l9-9l9 9h-2M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/><path d="M9 21v-6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v6"/></g></svg>
-              </button>
+                <path
+                  fill="currentColor"
+                  d="m19.6 21l-6.3-6.3q-.75.6-1.725.95T9.5 16q-2.725 0-4.612-1.888T3 9.5t1.888-4.612T9.5 3t4.613 1.888T16 9.5q0 1.1-.35 2.075T14.7 13.3l6.3 6.3zM9.5 14q1.875 0 3.188-1.312T14 9.5t-1.312-3.187T9.5 5T6.313 6.313T5 9.5t1.313 3.188T9.5 14"
+                ></path>
+              </svg>
+            </button>
 
-              <button
-                className={`text-white text-xl ${
-                  activeCircle === 2 ? 'bg-blue-500 rounded-full p-2' : ''
-                }`}
-                onClick={() => handleCircleClick(2)}
+            <button
+              className={`text-white text-xl animate-fadeIn ${
+                activeCircle === 2 ? "bg-blue-500 rounded-full p-2" : ""
+              }`}
+              onClick={() => handleCircleClick(2)}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none"><path fill="currentColor" fill-opacity="0.16" d="M8.4 15H5.6A1.6 1.6 0 0 0 4 16.6v2.8A1.6 1.6 0 0 0 5.6 21h2.8a1.6 1.6 0 0 0 1.6-1.6v-2.8A1.6 1.6 0 0 0 8.4 15m10-12h-2.8A1.6 1.6 0 0 0 14 4.6v2.8A1.6 1.6 0 0 0 15.6 9h2.8A1.6 1.6 0 0 0 20 7.4V4.6A1.6 1.6 0 0 0 18.4 3"/><path stroke="currentColor" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5" d="M8.4 3H5.6A1.6 1.6 0 0 0 4 4.6v4.8A1.6 1.6 0 0 0 5.6 11h2.8A1.6 1.6 0 0 0 10 9.4V4.6A1.6 1.6 0 0 0 8.4 3Zm0 12H5.6A1.6 1.6 0 0 0 4 16.6v2.8A1.6 1.6 0 0 0 5.6 21h2.8a1.6 1.6 0 0 0 1.6-1.6v-2.8A1.6 1.6 0 0 0 8.4 15Zm10-12h-2.8A1.6 1.6 0 0 0 14 4.6v2.8A1.6 1.6 0 0 0 15.6 9h2.8A1.6 1.6 0 0 0 20 7.4V4.6A1.6 1.6 0 0 0 18.4 3Zm0 10h-2.8a1.6 1.6 0 0 0-1.6 1.6v4.8a1.6 1.6 0 0 0 1.6 1.6h2.8a1.6 1.6 0 0 0 1.6-1.6v-4.8a1.6 1.6 0 0 0-1.6-1.6Z"/></g></svg>
-              </button>
+                <g
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                >
+                  <path d="M5 12H3l9-9l9 9h-2M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7" />
+                  <path d="M9 21v-6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v6" />
+                </g>
+              </svg>
+            </button>
+
+            <button
+              className={`text-white text-xl ${
+                activeCircle === 3 ? "bg-blue-500 rounded-full p-2" : ""
+              }`}
+              onClick={() => handleCircleClick(3)}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+              >
+                <g fill="none">
+                  <path
+                    fill="currentColor"
+                    fill-opacity="0.16"
+                    d="M8.4 15H5.6A1.6 1.6 0 0 0 4 16.6v2.8A1.6 1.6 0 0 0 5.6 21h2.8a1.6 1.6 0 0 0 1.6-1.6v-2.8A1.6 1.6 0 0 0 8.4 15m10-12h-2.8A1.6 1.6 0 0 0 14 4.6v2.8A1.6 1.6 0 0 0 15.6 9h2.8A1.6 1.6 0 0 0 20 7.4V4.6A1.6 1.6 0 0 0 18.4 3"
+                  />
+                  <path
+                    stroke="currentColor"
+                    stroke-linejoin="round"
+                    stroke-miterlimit="10"
+                    stroke-width="1.5"
+                    d="M8.4 3H5.6A1.6 1.6 0 0 0 4 4.6v4.8A1.6 1.6 0 0 0 5.6 11h2.8A1.6 1.6 0 0 0 10 9.4V4.6A1.6 1.6 0 0 0 8.4 3Zm0 12H5.6A1.6 1.6 0 0 0 4 16.6v2.8A1.6 1.6 0 0 0 5.6 21h2.8a1.6 1.6 0 0 0 1.6-1.6v-2.8A1.6 1.6 0 0 0 8.4 15Zm10-12h-2.8A1.6 1.6 0 0 0 14 4.6v2.8A1.6 1.6 0 0 0 15.6 9h2.8A1.6 1.6 0 0 0 20 7.4V4.6A1.6 1.6 0 0 0 18.4 3Zm0 10h-2.8a1.6 1.6 0 0 0-1.6 1.6v4.8a1.6 1.6 0 0 0 1.6 1.6h2.8a1.6 1.6 0 0 0 1.6-1.6v-4.8a1.6 1.6 0 0 0-1.6-1.6Z"
+                  />
+                </g>
+              </svg>
+            </button>
+
+            <button
+              className={`text-white text-xl ${
+                activeCircle === 4 ? "bg-blue-500 rounded-full p-2" : ""
+              }`}
+              onClick={() => handleCircleClick(4)}
+            >
              
-              <button
-                className={`text-white text-xl ${
-                  activeCircle === 3 ? 'bg-blue-500 rounded-full p-2' : ''
-                }`}
-                onClick={() => handleCircleClick(3)}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 14c2.206 0 4-1.794 4-4s-1.794-4-4-4s-4 1.794-4 4s1.794 4 4 4m0-6c1.103 0 2 .897 2 2s-.897 2-2 2s-2-.897-2-2s.897-2 2-2"/><path fill="currentColor" d="M11.42 21.814a1 1 0 0 0 1.16 0C12.884 21.599 20.029 16.44 20 10c0-4.411-3.589-8-8-8S4 5.589 4 9.995c-.029 6.445 7.116 11.604 7.42 11.819M12 4c3.309 0 6 2.691 6 6.005c.021 4.438-4.388 8.423-6 9.73c-1.611-1.308-6.021-5.294-6-9.735c0-3.309 2.691-6 6-6"/></svg>
-              </button>
-            </div>
+                <path
+                  fill="currentColor"
+                  d="M12 14c2.206 0 4-1.794 4-4s-1.794-4-4-4s-4 1.794-4 4s1.794 4 4 4m0-6c1.103 0 2 .897 2 2s-.897 2-2 2s-2-.897-2-2s.897-2 2-2"
+                />
+                <path
+                  fill="currentColor"
+                  d="M11.42 21.814a1 1 0 0 0 1.16 0C12.884 21.599 20.029 16.44 20 10c0-4.411-3.589-8-8-8S4 5.589 4 9.995c-.029 6.445 7.116 11.604 7.42 11.819M12 4c3.309 0 6 2.691 6 6.005c.021 4.438-4.388 8.423-6 9.73c-1.611-1.308-6.021-5.294-6-9.735c0-3.309 2.691-6 6-6"
+                />
+              </svg>
+            </button>
+          </div>
             </motion.div>
       </div>
-     
+     </div>
      
     </>
   )

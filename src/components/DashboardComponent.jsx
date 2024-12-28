@@ -158,7 +158,7 @@ const DashboardComponent = () => {
                 className="flex justify-between items-center mb-4"
                 key={index}
               >
-                <span className="date-class text-red-500">
+                <span className="date-class #0761FF">
                   {(new Date(item.date) || new Date())
                     .toLocaleDateString("en-US", {
                       day: "2-digit",

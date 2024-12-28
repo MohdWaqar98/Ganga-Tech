@@ -39,7 +39,10 @@ const MapComp = () => {
       target: mapRef.current,
       layers: [
         new TileLayer({
-          source: new OSM(),
+          source: new OSM({
+            url:"https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+            className: 'ol_bw'
+          }),
         }),
       ],
       view: new View({
@@ -123,6 +126,7 @@ const MapComp = () => {
           width: "90%",
           height: "480px",
           border: "2px solid black",
+          filter: "invert(100%)"
         }}
       ></div>
       <div ref={popupRef} id="popup"></div> {/* Popup container */}

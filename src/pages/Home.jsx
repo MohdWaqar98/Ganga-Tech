@@ -7,10 +7,13 @@ import Article from "../components/article";
 import { gsap } from "gsap";
 import DataMatch from "../components/DataMatch";
 import quality from "../data/quality";
+import Card from "../components/Card";
+import { CiSearch } from "react-icons/ci";
 
 const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [currentDate, setCurrentDate] = useState("");
+  const [showCard, setShowCard] = useState(false);
   const [userLocation, setUserLocation] = useState(() => {
     // Load the persisted location from localStorage or default to "Unknown Location"
     return localStorage.getItem("userLocation") || "Unknown Location";
@@ -19,7 +22,7 @@ const Home = () => {
   const [isAlertVisible, setIsAlertVisible] = useState(false);
   const [isSettingsVisible, setIsSettingsVisible] = useState(false);
   const [isArticlesVisible, setArticlesVisible] = useState(false);
-  const [activeCircle, setActiveCircle] = useState(1);
+  const [activeCircle, setActiveCircle] = useState(2);
   const navigate = useNavigate();
 
   const [todayData, setTodayData] = useState();
@@ -34,18 +37,25 @@ const Home = () => {
     setArticlesVisible((prev) => !prev);
   };
 
+  const toggleCard = () => {
+    setShowCard(!showCard);
+  };
+
   const handleCircleClick = (circleNum) => {
     setActiveCircle(circleNum);
     switch (circleNum) {
       case 1:
-        navigate("/Home");
+        navigate("/search");
         break;
       case 2:
-        navigate("/Dashboard");
+        navigate("/Home");
         break;
       case 3:
-        navigate("/Map");
+        navigate("/Dashboard");
         break;
+        case 4:
+          navigate("/Map");
+          break;
       default:
         break;
     }
@@ -95,40 +105,35 @@ const Home = () => {
     );
 
     if (
-      ph >= 6.5 &&
-      ph <= 8.5 ||
+      (ph >= 6.5 && ph <= 8.5) ||
       dissolvedOxygen >= 6 ||
       bod <= 2 ||
       totalColiform <= 50
     ) {
       return "Class A";
     } else if (
-      ph >= 6.5 &&
-      ph <= 8.5 ||
+      (ph >= 6.5 && ph <= 8.5) ||
       dissolvedOxygen >= 5 ||
       bod <= 3 ||
       totalColiform <= 500
     ) {
       return "Class B";
     } else if (
-      ph >= 6 &&
-      ph <= 9 ||
+      (ph >= 6 && ph <= 9) ||
       dissolvedOxygen >= 4 ||
       bod <= 3 ||
       totalColiform <= 5000
     ) {
       return "Class C";
     } else if (
-      ph >= 6.5 &&
-      ph <= 8.5 ||
+      (ph >= 6.5 && ph <= 8.5) ||
       dissolvedOxygen >= 4 ||
       bod <= 3 ||
       totalColiform <= 5000
     ) {
       return "Class D";
     } else if (
-      ph >= 6 &&
-      ph <= 8.5 ||
+      (ph >= 6 && ph <= 8.5) ||
       dissolvedOxygen >= 4 ||
       bod <= 3 ||
       totalColiform <= 5000
@@ -163,7 +168,7 @@ const Home = () => {
 
           {/* <div className="absolute inset-0 z-0"></div> */}
           <div
-            className="relative z-10 flex items-center justify-between p-6  animate-slideDown "
+            className="relative z-10 flex items-center justify-between p-6 animate-slideDown "
             style={{ width: "3" }}
           >
             {/* Location */}
@@ -194,7 +199,7 @@ const Home = () => {
                   height="30.5"
                   viewBox="0 0 16 16"
                 >
-                 <path
+                  <path
                     fill="currentColor"
                     d="M6 9.5A2 2 0 0 1 7.937 11H13.5a.5.5 0 0 1 .09.992L13.5 12l-5.563.001a2 2 0 0 1-3.874 0L2.5 12a.5.5 0 0 1-.09-.992L2.5 11h1.563A2 2 0 0 1 6 9.5m0 1a1 1 0 1 0 0 2a1 1 0 0 0 0-2m4-8A2 2 0 0 1 11.937 4H13.5a.5.5 0 0 1 .09.992L13.5 5l-1.563.001a2 2 0 0 1-3.874 0L2.5 5a.5.5 0 0 1-.09-.992L2.5 4h5.563A2 2 0 0 1 10 2.5m0 1a1 1 0 1 0 0 2a1 1 0 0 0 0-2"
                   />
@@ -232,11 +237,21 @@ const Home = () => {
             <div>
               <div className="article flex items-center justify-between ">
                 <button onClick={handleArticleClick}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M3 6c-.55 0-1 .45-1 1v13c0 1.1.9 2 2 2h13c.55 0 1-.45 1-1s-.45-1-1-1H5c-.55 0-1-.45-1-1V7c0-.55-.45-1-1-1m17-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2m-2 9h-8c-.55 0-1-.45-1-1s.45-1 1-1h8c.55 0 1 .45 1 1s-.45 1-1 1m-4 4h-4c-.55 0-1-.45-1-1s.45-1 1-1h4c.55 0 1 .45 1 1s-.45 1-1 1m4-8h-8c-.55 0-1-.45-1-1s.45-1 1-1h8c.55 0 1 .45 1 1s-.45 1-1 1"/></svg>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M3 6c-.55 0-1 .45-1 1v13c0 1.1.9 2 2 2h13c.55 0 1-.45 1-1s-.45-1-1-1H5c-.55 0-1-.45-1-1V7c0-.55-.45-1-1-1m17-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2m-2 9h-8c-.55 0-1-.45-1-1s.45-1 1-1h8c.55 0 1 .45 1 1s-.45 1-1 1m-4 4h-4c-.55 0-1-.45-1-1s.45-1 1-1h4c.55 0 1 .45 1 1s-.45 1-1 1m4-8h-8c-.55 0-1-.45-1-1s.45-1 1-1h8c.55 0 1 .45 1 1s-.45 1-1 1"
+                    />
+                  </svg>
                 </button>
                 {/* Display current date without the day */}
               </div>
-              <p className="text-black text-[18px]  pl-10 -mt-10 ">
+              <p className="text-black text-[18px]  pl-10 mt-[-1.75rem] ">
                 Today, {currentDate}
               </p>
               <h1
@@ -374,6 +389,25 @@ const Home = () => {
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
+                width={24}
+                height={24}
+                viewBox="0 0 24 24"
+              >
+                <path
+                  fill="currentColor"
+                  d="m19.6 21l-6.3-6.3q-.75.6-1.725.95T9.5 16q-2.725 0-4.612-1.888T3 9.5t1.888-4.612T9.5 3t4.613 1.888T16 9.5q0 1.1-.35 2.075T14.7 13.3l6.3 6.3zM9.5 14q1.875 0 3.188-1.312T14 9.5t-1.312-3.187T9.5 5T6.313 6.313T5 9.5t1.313 3.188T9.5 14"
+                ></path>
+              </svg>
+            </button>
+
+            <button
+              className={`text-white text-xl animate-fadeIn ${
+                activeCircle === 2 ? "bg-blue-500 rounded-full p-2" : ""
+              }`}
+              onClick={() => handleCircleClick(2)}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"
@@ -393,9 +427,9 @@ const Home = () => {
 
             <button
               className={`text-white text-xl ${
-                activeCircle === 2 ? "bg-blue-500 rounded-full p-2" : ""
+                activeCircle === 3 ? "bg-blue-500 rounded-full p-2" : ""
               }`}
-              onClick={() => handleCircleClick(2)}
+              onClick={() => handleCircleClick(3)}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -422,10 +456,11 @@ const Home = () => {
 
             <button
               className={`text-white text-xl ${
-                activeCircle === 3 ? "bg-blue-500 rounded-full p-2" : ""
+                activeCircle === 4 ? "bg-blue-500 rounded-full p-2" : ""
               }`}
-              onClick={() => handleCircleClick(3)}
+              onClick={() => handleCircleClick(4)}
             >
+             
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -449,4 +484,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Home;
